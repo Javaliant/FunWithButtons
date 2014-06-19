@@ -9,8 +9,8 @@ import java.awt.event.*;
 public class ControlCircle extends JFrame {
 	private JButton nlrg_button = new JButton("Enlarge");
 	private JButton shrink_button = new JButton("Shrink");
-	private JButton supershrinker_button = new JButton("Shrink a lot");
-	private JButton superenlarger_button = new JButton("Enlarge a lot ");
+	private JButton supershrinker_button = new JButton("Augment");
+	private JButton superenlarger_button = new JButton("Diminish");
 	private CirclePanel canvas = new CirclePanel();
 
 	public ControlCircle() {
@@ -29,11 +29,13 @@ public class ControlCircle extends JFrame {
 		this.add(p, BorderLayout.SOUTH);
 		this.add(p2, BorderLayout.NORTH);
 		
-		// Bind buttons with respective eventlistener class
-		nlrg_button.addActionListener(new EnlargeListener());
-		shrink_button.addActionListener(new ShrinkListener());
-		superenlarger_button.addActionListener(new SNLargeListener());
-		supershrinker_button.addActionListener(new SShrinkListener());
+		CircleListener listener = new CircleListener();
+
+		// Bind buttons with  eventlistener class
+		nlrg_button.addActionListener(listener);
+		shrink_button.addActionListener(listener);
+		superenlarger_button.addActionListener(listener);
+		supershrinker_button.addActionListener(listener);
 	}
 
 	public static void main(String[] args) {
@@ -44,32 +46,15 @@ public class ControlCircle extends JFrame {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
 	}
-
-	class EnlargeListener implements ActionListener {
+	
+	// Event Listener class; checks which button was clicked and responds accordingly
+	class CircleListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			canvas.enlarge();
-		}
-	}
-
-	class ShrinkListener implements ActionListener {
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			canvas.shrink();
-		}
-	}
-
-	class SNLargeListener implements ActionListener {
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			canvas.enlargeAlot();
-		}
-	}
-
-	class SShrinkListener implements ActionListener {
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			canvas.shrinkAlot();
+			if (e.getSource() == nlrg_button) canvas.enlarge();
+			else if (e.getSource() == shrink_button) canvas.shrink();
+			else if (e.getSource() == superenlarger_button) canvas.enlargeAlot();
+			else if (e.getSource() == supershrinker_button) canvas.shrinkAlot();
 		}
 	}
 
@@ -87,11 +72,11 @@ public class ControlCircle extends JFrame {
 			repaint();
 		}
 		public void enlargeAlot() {
-			radius += 3;
+			radius += 5;
 			repaint();
 		}
 		public void shrinkAlot() {
-			radius -= 3;
+			radius -= 5;
 			repaint();
 		}
 		
