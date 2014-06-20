@@ -9,8 +9,8 @@ import java.awt.event.*;
 public class ControlCircle extends JFrame {
 	private JButton nlrg_button = new JButton("Enlarge");
 	private JButton shrink_button = new JButton("Shrink");
-	private JButton supershrinker_button = new JButton("Augment");
-	private JButton superenlarger_button = new JButton("Diminish");
+	private JButton supershrinker_button = new JButton("Shrink a lot");
+	private JButton superenlarger_button = new JButton("Enlarge a lot ");
 	private CirclePanel canvas = new CirclePanel();
 
 	public ControlCircle() {
@@ -31,7 +31,7 @@ public class ControlCircle extends JFrame {
 		
 		CircleListener listener = new CircleListener();
 
-		// Bind buttons with  eventlistener class
+		// Bind buttons with respective eventlistener class
 		nlrg_button.addActionListener(listener);
 		shrink_button.addActionListener(listener);
 		superenlarger_button.addActionListener(listener);
@@ -46,8 +46,7 @@ public class ControlCircle extends JFrame {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
 	}
-	
-	// Event Listener class; checks which button was clicked and responds accordingly
+
 	class CircleListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -55,7 +54,10 @@ public class ControlCircle extends JFrame {
 			else if (e.getSource() == shrink_button) canvas.shrink();
 			else if (e.getSource() == superenlarger_button) canvas.enlargeAlot();
 			else if (e.getSource() == supershrinker_button) canvas.shrinkAlot();
+
+			repaint();
 		}
+
 	}
 
 	class CirclePanel extends JPanel {
@@ -63,22 +65,10 @@ public class ControlCircle extends JFrame {
 		private int radius = 5;
 
 		// Several circle transformation methods
-		public void enlarge() {
-			radius++;
-			repaint();
-		}
-		public void shrink() {
-			radius--;
-			repaint();
-		}
-		public void enlargeAlot() {
-			radius += 5;
-			repaint();
-		}
-		public void shrinkAlot() {
-			radius -= 5;
-			repaint();
-		}
+		public void enlarge(){ radius++; }
+		public void shrink(){ radius--; }
+		public void enlargeAlot(){ radius += 5; }
+		public void shrinkAlot(){ radius -= 5; }
 		
 		@Override
 		protected void paintComponent(Graphics g) {
